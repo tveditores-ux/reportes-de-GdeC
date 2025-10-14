@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>FORMATOS — Libro para Grupos de Cuidado</title>
+<style>
+  :root{
+    --brand:#0d4b8f;
+    --ink:#1d2633;
+    --muted:#6b7a90;
+    --light:#f7f9fc;
+    --accent:#1aa179;
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    margin:0;
+    font-family: "Inter", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    color:var(--ink);
+    background:var(--light);
+  }
+  .book{
+    width: 100%;
+    max-width: 1024px;
+    margin: 24px auto;
+    padding: 0 16px 80px;
+  }
+  header.top{
+    display:flex;align-items:center;justify-content:space-between;
+    margin: 12px 0 20px;
+    gap:16px;
+  }
+  .brand{
+    display:flex;align-items:center;gap:12px;
+  }
+  .brand .logo{
+    width:44px;height:44px;border-radius:10px;background:linear-gradient(135deg,var(--brand),#2e7bd8);
+    box-shadow: 0 6px 18px rgba(13,75,143,.25) inset, 0 2px 6px rgba(0,0,0,.1);
+  }
+  .brand h1{
+    font-size:20px;margin:0;line-height:1.2;letter-spacing:.3px;
+  }
+  .brand .sub{color:var(--muted);font-size:12px;margin-top:2px}
+  .print-note{font-size:12px;color:var(--muted)}
+  .toolbar{
+    display:flex;gap:8px;flex-wrap:wrap;
+  }
+  .btn{
+    background:var(--brand);color:white;border:0;border-radius:10px;
+    padding:10px 14px;font-weight:600;cursor:pointer;
+    box-shadow: 0 6px 16px rgba(13,75,143,.24);
+  }
+  .btn.alt{background:var(--accent);}
+  .page{
+    background:#fff;border-radius:16px;padding:28px;margin:18px 0;
+    box-shadow: 0 10px 30px rgba(13,75,143,.10), 0 4px 10px rgba(0,0,0,.05);
+    position: relative;
+  }
+  .page h2{
+    margin:0 0 12px;
+    border-bottom:3px solid var(--brand);
+    padding-bottom:8px;
+    font-size:22px;
+  }
+  .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .grid-3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  .grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+  .label{font-size:12px;color:var(--muted);margin-bottom:4px}
+  input[type=text], input[type=number], input[type=email], textarea, select{
+    width:100%;padding:10px 12px;border:1px solid #e5e9f2;border-radius:10px;background:#fff;
+    font:inherit;outline:none;
+  }
+  textarea{min-height:90px;resize:vertical}
+  .line{height:42px}
+  .box{border:1px solid #e6eef7;border-radius:12px;padding:12px;background:#fbfdff}
+  .checkline{display:flex;align-items:center;gap:10px;margin:6px 0}
+  .checkline input{transform:scale(1.2)}
+  .meta{display:flex;gap:16px;flex-wrap:wrap;margin-bottom:8px}
+  .badge{
+    display:inline-block;padding:4px 10px;border-radius:999px;
+    background:#eef4ff;color:var(--brand);font-size:12px;font-weight:700;letter-spacing:.25px
+  }
+  table{width:100%;border-collapse:collapse;border-spacing:0;font-size:14px}
+  th, td{border:1px solid #e6eef7;padding:8px 10px;text-align:center}
+  thead th{background:#f3f7ff;color:#14365f}
+  tfoot td{background:#f8fbff;font-weight:700}
+  .w-30{width:30%}.w-20{width:20%}
+  .muted{color:var(--muted)}
+  .note{font-size:12px;color:var(--muted);margin-top:8px}
+  .footer{
+    position:absolute;bottom:12px;right:16px;color:#9aabc3;font-size:11px;
+  }
+  /* Print */
+  @media print{
+    body{background:#fff}
+    .book{max-width:100%;margin:0;padding:0}
+    header.top, .toolbar{display:none !important}
+    .page{page-break-after:always;box-shadow:none;border-radius:0;margin:0;padding:24mm}
+    .page h2{margin-top:0}
+  }
+</style>
+</head>
+<body>
+  <div class="book">
+    <header class="top">
+      <div class="brand">
+        <div class="logo" aria-hidden="true"></div>
+        <div>
+          <h1>FORMATOS — Grupos de Cuidado</h1>
+          <div class="sub">Planificador Mensual · Programa Semanal · Desarrollo de Liderazgo · F.O.D.A. · Reporte Trimestral</div>
+        </div>
+      </div>
+      <div class="toolbar">
+        <button class="btn" onclick="window.print()">Imprimir / PDF</button>
+        <button class="btn alt" onclick="exportJSON()">Exportar datos (JSON)</button>
+      </div>
+    </header>
+
+    <!-- Portada / Datos personales -->
+    <section class="page" id="datos">
+      <h2>Datos Personales</h2>
+      <div class="meta">
+        <span class="badge">FORMATO 01</span>
+        <span class="badge">Identificación</span>
+      </div>
+      <div class="grid-2">
+        <div>
+          <div class="label">Pertenece a</div>
+          <input type="text" name="pertenece" class="line" />
+        </div>
+        <div>
+          <div class="label">Congregación</div>
+          <input type="text" name="congregacion" class="line" />
+        </div>
+        <div>
+          <div class="label">Dirección del GdC</div>
+          <input type="text" name="direccion" />
+        </div>
+        <div>
+          <div class="label">Correo Electrónico</div>
+          <input type="email" name="email" />
+        </div>
+        <div>
+          <div class="label">Iglesia</div>
+          <input type="text" name="iglesia" />
+        </div>
+        <div>
+          <div class="label">Líder Asesor</div>
+          <input type="text" name="lider_asesor" />
+        </div>
+      </div>
+      <p class="note">Sugerencia: imprime esta página en cartulina ligera. Espacio reservado para logotipo institucional en el encabezado.</p>
+      <div class="footer">Tinta Verde Editores · v1.0 HTML</div>
+    </section>
+
+    <!-- Programa de Reunión Semanal -->
+    <section class="page" id="programa">
+      <h2>Programa de Reunión Semanal</h2>
+      <div class="meta">
+        <span class="badge">FORMATO 02</span>
+        <span class="badge">Operación Semanal</span>
+      </div>
+      <div class="grid-3">
+        <div>
+          <div class="label">Lugar</div>
+          <input type="text" name="lugar" class="line" />
+        </div>
+        <div>
+          <div class="label">Día / Hora</div>
+          <input type="text" name="diahora" class="line" />
+        </div>
+        <div>
+          <div class="label">Resumen</div>
+          <div class="box">
+            <div class="checkline"><label><input type="checkbox" /> Miembros</label></div>
+            <div class="checkline"><label><input type="checkbox" /> Invitados</label></div>
+            <div class="checkline"><label><input type="checkbox" /> Asistencia</label></div>
+            <div class="checkline"><label><input type="checkbox" /> Ofrendas</label></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid-2" style="margin-top:12px">
+        <div class="box">
+          <div class="label">Tiempo de Refrigerio</div>
+          <input type="text" name="refrigerio" />
+          <div class="label" style="margin-top:8px">Dinámicas</div>
+          <textarea name="dinamicas"></textarea>
+        </div>
+        <div class="box">
+          <div class="label">Testimonios (resumen)</div>
+          <textarea name="testimonios"></textarea>
+        </div>
+      </div>
+
+      <div class="grid-4" style="margin-top:12px">
+        <div class="box">
+          <strong>Adorar</strong>
+          <div class="label" style="margin-top:6px">Canciones</div>
+          <textarea name="canciones"></textarea>
+          <div class="checkline"><label><input type="checkbox" /> Listo</label></div>
+        </div>
+        <div class="box">
+          <strong>Aprender</strong>
+          <div class="label" style="margin-top:6px">Elemento Clave</div>
+          <textarea name="aprender_clave"></textarea>
+          <div class="label">Grupo #1</div>
+          <input type="text" name="grupo1" />
+          <div class="label">Grupo #2</div>
+          <input type="text" name="grupo2" />
+          <div class="checkline"><label><input type="checkbox" /> Listo</label></div>
+        </div>
+        <div class="box">
+          <strong>Compartir</strong>
+          <div class="label" style="margin-top:6px">Notas</div>
+          <textarea name="compartir"></textarea>
+          <div class="checkline"><label><input type="checkbox" /> Listo</label></div>
+        </div>
+        <div class="box">
+          <strong>Conectar</strong>
+          <div class="label" style="margin-top:6px">Seguimiento</div>
+          <textarea name="conectar"></textarea>
+          <div class="checkline"><label><input type="checkbox" /> Listo</label></div>
+        </div>
+      </div>
+
+      <div style="margin-top:12px">
+        <label class="checkline"><input type="checkbox" name="visita_asesor" /> Nos visitó el Líder Asesor</label>
+      </div>
+      <div class="footer">Programa Semanal</div>
+    </section>
+
+    <!-- Planificador Mensual (4 semanas) -->
+    <section class="page" id="planificador">
+      <h2>Planificador Mensual</h2>
+      <div class="meta">
+        <span class="badge">FORMATO 03</span>
+        <span class="badge">Planificación</span>
+      </div>
+      <div class="grid-2">
+        <div>
+          <div class="label">Etapa</div>
+          <input type="text" class="line" name="etapa" placeholder="Equipo / Conquista / Consolidación / Multiplicación" />
+        </div>
+        <div>
+          <div class="label">Mes</div>
+          <input type="text" class="line" name="mes" />
+        </div>
+      </div>
+      <div class="grid-2" style="margin-top:12px">
+        <div class="box">
+          <strong>Semana 1</strong>
+          <div class="label">Refrigerio</div><input type="text" />
+          <div class="label">Dinámicas</div><textarea></textarea>
+          <div class="label">Elemento Clave</div><textarea></textarea>
+          <div class="label">Apoyo</div><textarea></textarea>
+        </div>
+        <div class="box">
+          <strong>Semana 2</strong>
+          <div class="label">Refrigerio</div><input type="text" />
+          <div class="label">Dinámicas</div><textarea></textarea>
+          <div class="label">Elemento Clave</div><textarea></textarea>
+          <div class="label">Apoyo</div><textarea></textarea>
+        </div>
+        <div class="box">
+          <strong>Semana 3</strong>
+          <div class="label">Refrigerio</div><input type="text" />
+          <div class="label">Dinámicas</div><textarea></textarea>
+          <div class="label">Elemento Clave</div><textarea></textarea>
+          <div class="label">Apoyo</div><textarea></textarea>
+        </div>
+        <div class="box">
+          <strong>Semana 4</strong>
+          <div class="label">Refrigerio</div><input type="text" />
+          <div class="label">Dinámicas</div><textarea></textarea>
+          <div class="label">Elemento Clave</div><textarea></textarea>
+          <div class="label">Apoyo</div><textarea></textarea>
+        </div>
+      </div>
+      <div class="footer">Planificador Mensual</div>
+    </section>
+
+    <!-- Desarrollo de Liderazgo (checklist) -->
+    <section class="page" id="liderazgo">
+      <h2>Desarrollo de Liderazgo</h2>
+      <div class="meta">
+        <span class="badge">FORMATO 04</span>
+        <span class="badge">Proceso de Formación</span>
+      </div>
+      <div class="box">
+        <div class="muted" style="margin-bottom:8px">Marque el avance por persona en los hitos: NV, B, tPE, VL, 2D, DRT, dLC, LCa, CC, Otros.</div>
+        <table>
+          <thead>
+            <tr>
+              <th class="w-30">Nombre</th>
+              <th>NV</th><th>B</th><th>tPE</th><th>VL</th><th>2D</th><th>DRT</th><th>dLC</th><th>LCa</th><th>CC</th><th>Otros</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- 10 filas por defecto -->
+            <tr><td contenteditable='true'></td><td><input type='checkbox'/></td><td><input type='checkbox'/></td><td><input type='checkbox'/></td><td><input type='checkbox'/></td><td><input type='checkbox'/></td><td><input type='checkbox'/></td><td><input type='checkbox'/></td><td><input type='checkbox'/></td><td><input type='checkbox'/></td><td contenteditable='true'></td></tr>
+<tr><td contenteditable='true'></td><td><input type='checkbox'/></td><td><input type='checkbox'/></td><td><input type='checkbox'/></td><td><input type='checkbox'/></td><td><input type='checkbox'/></td><td><input type='checkbox'/></td><td><input type='checkbox'/></td><td><input type='checkbox'/></td><td><input type='checkbox'/></td><td contenteditable='true'></td></tr>
+<tr><td contenteditable='true'></td><td><input type='checkbox'/></td><td><input type='checkbox'/></td><td><input type='checkbox'/></td><td><input type='checkbox'/></td><td><input type='checkbox'/></td><td><input type='checkbox'/></td><td><input type='checkbox'/></td><td><input type='checkbox'/></td><td><input type='checkbox'/></td><td contenteditable='true'></td></tr>
+<tr><td contenteditable='true'></td><td><input type='checkbox'/></td><td><input type='checkbox'/></td><td><input type='checkbox'/></td><td><input type='checkbox'/></td><td><input type='checkbox'/></td><td><input type='checkbox'/></td><td><input type='checkbox'/></td><td><input type='checkbox'/></td><td><input type='checkbox'/></td><td contenteditable='true'></td></tr>
+<tr><td contenteditable='true'></td><td><input type='checkbox'/></td><td><input type='checkbox'/></td><td><input type='checkbox'/></td><td><input type='checkbox'/></td><td><input type='checkbox'/></td><td><input type='checkbox'/></td><td><input type='checkbox'/></td><td><input type='checkbox'/></td><td><input type='checkbox'/></td><td contenteditable='true'></td></tr>
+<tr><td contenteditable='true'></td><td><input type='checkbox'/></td><td><input type='checkbox'/></td><td><input type='checkbox'/></td><td><input type='checkbox'/></td><td><input type='checkbox'/></td><td><input type='checkbox'/></td><td><input type='checkbox'/></td><td><input type='checkbox'/></td><td><input type='checkbox'/></td><td contenteditable='true'></td></tr>
+<tr><td contenteditable='true'></td><td><input type='checkbox'/></td><td><input type='checkbox'/></td><td><input type='checkbox'/></td><td><input type='checkbox'/></td><td><input type='checkbox'/></td><td><input type='checkbox'/></td><td><input type='checkbox'/></td><td><input type='checkbox'/></td><td><input type='checkbox'/></td><td contenteditable='true'></td></tr>
+<tr><td contenteditable='true'></td><td><input type='checkbox'/></td><td><input type='checkbox'/></td><td><input type='checkbox'/></td><td><input type='checkbox'/></td><td><input type='checkbox'/></td><td><input type='checkbox'/></td><td><input type='checkbox'/></td><td><input type='checkbox'/></td><td><input type='checkbox'/></td><td contenteditable='true'></td></tr>
+<tr><td contenteditable='true'></td><td><input type='checkbox'/></td><td><input type='checkbox'/></td><td><input type='checkbox'/></td><td><input type='checkbox'/></td><td><input type='checkbox'/></td><td><input type='checkbox'/></td><td><input type='checkbox'/></td><td><input type='checkbox'/></td><td><input type='checkbox'/></td><td contenteditable='true'></td></tr>
+<tr><td contenteditable='true'></td><td><input type='checkbox'/></td><td><input type='checkbox'/></td><td><input type='checkbox'/></td><td><input type='checkbox'/></td><td><input type='checkbox'/></td><td><input type='checkbox'/></td><td><input type='checkbox'/></td><td><input type='checkbox'/></td><td><input type='checkbox'/></td><td contenteditable='true'></td></tr>
+
+          </tbody>
+        </table>
+      </div>
+      <div class="footer">Ruta de desarrollo</div>
+    </section>
+
+    <!-- Reporte Trimestral -->
+    <section class="page" id="reporte">
+      <h2>Reporte Trimestral</h2>
+      <div class="meta">
+        <span class="badge">FORMATO 05</span>
+        <span class="badge">Indicadores</span>
+      </div>
+      <div class="grid-3">
+        <div class="box">
+          <strong>Ofrendas</strong>
+          <table>
+            <thead><tr><th class="w-20">Semana</th><th>Monto</th></tr></thead>
+            <tbody id="ofrendas-body"></tbody>
+            <tfoot><tr><td>Total</td><td id="ofrendas-total">0</td></tr></tfoot>
+          </table>
+        </div>
+        <div class="box">
+          <strong>Visitantes</strong>
+          <table>
+            <thead><tr><th class="w-20">Semana</th><th>Nº</th></tr></thead>
+            <tbody id="visitantes-body"></tbody>
+            <tfoot><tr><td>Promedio</td><td id="visitantes-prom">0</td></tr></tfoot>
+          </table>
+        </div>
+        <div class="box">
+          <strong>Asistencia</strong>
+          <table>
+            <thead><tr><th class="w-20">Semana</th><th>Nº</th></tr></thead>
+            <tbody id="asistencia-body"></tbody>
+            <tfoot><tr><td>Promedio</td><td id="asistencia-prom">0</td></tr></tfoot>
+          </table>
+        </div>
+      </div>
+      <div class="note">Incluye 13 semanas para abarcar trimestres largos. Los totales y promedios se calculan automáticamente.</div>
+      <div class="footer">Indicadores trimestrales</div>
+    </section>
+
+    <section class="page" id="foda">
+      <h2>F.O.D.A.</h2>
+      <div class="meta">
+        <span class="badge">FORMATO 06</span>
+        <span class="badge">Análisis Situacional</span>
+      </div>
+      <div class="grid-2">
+        <div class="box">
+          <strong>Fortalezas</strong>
+          <textarea></textarea>
+        </div>
+        <div class="box">
+          <strong>Oportunidades</strong>
+          <textarea></textarea>
+        </div>
+        <div class="box">
+          <strong>Debilidades</strong>
+          <textarea></textarea>
+        </div>
+        <div class="box">
+          <strong>Amenazas</strong>
+          <textarea></textarea>
+        </div>
+      </div>
+      <div class="footer">FODA</div>
+    </section>
+  </div>
+
+<script>
+  // Rellenar tabla de liderazgo con 10 filas
+  (function addLeadershipRows(){
+    const tbody = document.querySelector('#liderazgo tbody');
+    let rows='';
+    for(let i=0;i<10;i++){
+      rows += '<tr><td contenteditable="true"></td>' +
+              '<td><input type="checkbox"/></td>'.repeat(9) +
+              '<td contenteditable="true"></td></tr>';
+    }
+    tbody.innerHTML = rows;
+  })();
+
+  // Crear 13 filas para cada indicador y hacer cálculos
+  function createRows(id, labelPrefix){
+    const body = document.getElementById(id);
+    let rows='';
+    for(let i=1;i<=13;i++){
+      rows += `<tr><td>${i.toString().padStart(2,'0')}</td><td contenteditable="true" data-row="${i}"></td></tr>`;
+    }
+    body.innerHTML = rows;
+  }
+  createRows('ofrendas-body','Semana');
+  createRows('visitantes-body','Semana');
+  createRows('asistencia-body','Semana');
+
+  // Observa cambios y calcula totales/promedios
+  function parseNum(x){ const n = parseFloat(String(x).replace(/[^0-9.\-]/g,'')); return isNaN(n)?0:n; }
+  function calc(){
+    // Ofrendas total
+    let tot=0, count=0;
+    document.querySelectorAll('#ofrendas-body td[contenteditable]').forEach(td=>{const v=parseNum(td.innerText); if(v){tot+=v; count++;}});
+    document.getElementById('ofrendas-total').innerText = tot.toLocaleString();
+    // Visitantes promedio
+    let tv=0, cv=0;
+    document.querySelectorAll('#visitantes-body td[contenteditable]').forEach(td=>{const v=parseNum(td.innerText); if(v||td.innerText.trim()!==''){tv+=v; cv++;}});
+    document.getElementById('visitantes-prom').innerText = cv? (tv/cv).toFixed(1): '0';
+    // Asistencia promedio
+    let ta=0, ca=0;
+    document.querySelectorAll('#asistencia-body td[contenteditable]').forEach(td=>{const v=parseNum(td.innerText); if(v||td.innerText.trim()!==''){ta+=v; ca++;}});
+    document.getElementById('asistencia-prom').innerText = ca? (ta/ca).toFixed(1): '0';
+  }
+  document.addEventListener('input', calc);
+
+  // Exportar a JSON básico (campos y tablas editables)
+  function exportJSON(){
+    const data = {};
+    document.querySelectorAll('input, textarea').forEach(el=>{
+      if(el.type==='checkbox'){ data[el.name||el.id||el.parentElement?.textContent?.trim()]=el.checked; }
+      else{ data[el.name||el.id||el.parentElement?.textContent?.trim()]=el.value; }
+    });
+    // tablas contenteditable
+    document.querySelectorAll('td[contenteditable]').forEach((td,i)=>{
+      data[`cell_${i}`]=td.innerText.trim();
+    });
+    const blob = new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url; a.download = 'libro_gdc_datos.json'; a.click();
+    setTimeout(()=>URL.revokeObjectURL(url), 1000);
+  }
+</script>
+</body>
+</html>
